@@ -1,0 +1,28 @@
+﻿<Window x:Class="Prakt_5Lab.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prakt_5Lab"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Background="#FF75B0C8">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+     
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="Welcome" Text="Приветсвуем в нашей программе" TextAlignment="Center" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Width="499"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBox x:Name="LoginArea" Width="250px" Height="30px"/>
+            <TextBox x:Name="PassArea" Grid.Row="1" Width="250px" Height="30px"  GotFocus="PassArea_GotFocus"></TextBox>
+            <Button x:Name="login" Grid.Row="3" Width="300px" Height="40" Content="Войти" FontSize="22" Click="login_Click"></Button>
+            <DataGrid x:Name="GridCheck" Visibility="Collapsed" IsEnabled="False" AutoGenerateColumns="False"></DataGrid>
+        </Grid>
+    </Grid>
+</Window>

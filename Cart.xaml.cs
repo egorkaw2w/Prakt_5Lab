@@ -25,13 +25,15 @@ namespace Prakt_5Lab
     {
         CartTableAdapter cart = new CartTableAdapter();
         CartInfoTableAdapter cartinfo = new CartInfoTableAdapter();
+        CHECKITableAdapter checkit = new CHECKITableAdapter();
         int selected = 0;
         int totalcost = 0;
-        int number = 0;
+        int number;
         public Cart()
         {
             InitializeComponent();
-            CartInfo.ItemsSource = cartinfo.GetData();
+            CartInfo.ItemsSource = cartinfo.GetData().ToList();
+             
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -43,20 +45,23 @@ namespace Prakt_5Lab
 
         private void Buy_Click(object sender, RoutedEventArgs e)
         {
+            number = Convert.ToInt32(checkit.GetData().Id_CheckColumn.ToString().Last());
             int row = CartInfo.Items.Count;
             string text = "";
-            File.AppendAllText("чек.txt","\nYandex Market \n");
-            string line2 = "Чек #" + number++ +"\n";
-            File.AppendAllText("чек.txt", line2);
+            number++;
+            File.AppendAllText($"чек{number}.txt", "\nYandex Market \n");
+            string line2 = "Чек #" + number + "\n";
+            File.AppendAllText($"чек{number}.txt", line2);
             string line3 = "\n";
             for (int i = 0; i < row; i++)
             {
                 var sel = cartinfo.GetData()[i];
-                text = sel.Название + "\t-\t" + sel.Стоимость + "\n";
-                File.AppendAllText("чек.txt",text);
-                totalcost += Convert.ToInt32(sel.Стоимость);
+                text = sel.Название_ + "\t-\t" + sel.Стоимость_ + "\n";
+                File.AppendAllText($"чек{number}.txt", text);
+                totalcost += Convert.ToInt32(sel.Стоимость_);
             }
-            File.AppendAllText("чек.txt", "\t\tВсего: "+totalcost.ToString());
+            File.AppendAllText($"чек{number}.txt", "\t\tВсего: " + totalcost.ToString());
+            checkit.Insert($"чек{number}.txt");
             totalcost = 0;
             cartinfo.DeleteQuery();
             CartInfo.ItemsSource = cartinfo.GetData();
@@ -65,11 +70,6 @@ namespace Prakt_5Lab
         private void CartInfo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-        }
-
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Prakt_5Lab"
         mc:Ignorable="d"
-        Title="UserWindow" Height="450" Width="800">
+        Title="UserWindow" Height="450" Width="800"
+        Loaded="Window_Loaded"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -14,7 +17,9 @@
             <RowDefinition Height="1*"></RowDefinition>
         </Grid.RowDefinitions>
         <TextBlock></TextBlock>
-        <DataGrid x:Name="UserGrid" Grid.Row="1" IsReadOnly="True" SelectionChanged="UserGrid_SelectionChanged"></DataGrid>
+        <DataGrid x:Name="UserGrid" Grid.Row="1"  IsReadOnly="True" SelectionChanged="UserGrid_SelectionChanged">
+            
+        </DataGrid>
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -22,8 +27,8 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Name="ItemName"></TextBlock>
-            <ComboBox x:Name="ItemCount" Grid.Column="1" SelectionChanged="ItemCount_SelectionChanged" />
+            <TextBlock x:Name="ItemName" ></TextBlock>
+            <ComboBox x:Name="ItemCount" materialDesign:HintAssist.Hint="количество"  Grid.Column="1" SelectionChanged="ItemCount_SelectionChanged" />
             <TextBlock x:Name="ItemCost"  Grid.Column="2"></TextBlock>
             <TextBlock x:Name="ItemStatus" Grid.Column="3"></TextBlock>
         </Grid>

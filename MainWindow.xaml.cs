@@ -32,9 +32,8 @@ namespace Prakt_5Lab
         public MainWindow()
         {
             InitializeComponent();
-            LoginArea.Text = "admin";
-            PassArea.Text = "admin";
-
+         /*   LoginArea.Text = "admin";
+            PassArea.Password = "admin";*/
 
         }
 
@@ -46,28 +45,57 @@ namespace Prakt_5Lab
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-           
-            
-                UserWindow window = new UserWindow();
-                window.Show();
-                Close();
-            
-           
+
+            var allLogins = userProfile.GetData().Rows;
+            for (int i = 0; i < allLogins.Count; i++)
+            {
+                if (allLogins[i][2].ToString() == LoginArea.Text &&
+                    allLogins[i][3].ToString() == PassArea.Password)
+                {
+                    int roleId = (int)allLogins[i][4];
+                    switch (roleId)
+                    {
+                        case 1:
+                            SellerWindow sellerWindow = new SellerWindow();
+                            sellerWindow.Show();
+                            Close();
+                            return;
+                            break;
+                        case 2:
+                            UserWindow userWindow = new UserWindow();
+                            userWindow.Show();
+                            Close();
+                            return;
+                            break;
+                        case 3:
+                            AdminWindow admin = new AdminWindow();
+                            admin.Show();
+                            Close();
+                            return;
+                            break;
+                    }
+                }
+            }
+
+
+            MessageBox.Show("Неверный логин или пароль");
+            return;
+
 
         }
 
 
 
 
-    private void LoginArea_GotFocus(object sender, RoutedEventArgs e)
-    {
-               PassArea.Text = "";
-    }
+        private void LoginArea_GotFocus(object sender, RoutedEventArgs e)
+        {
+            LoginArea.Text = "";
+        }
 
-    private void PassArea_GotFocus(object sender, RoutedEventArgs e)
-    {
-        PassArea.Text = "";
-    }
+        private void PassArea_GotFocus(object sender, RoutedEventArgs e)
+        {
 
-}
+        }
+
+    }
 }

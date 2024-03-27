@@ -1,0 +1,41 @@
+﻿<Window x:Class="Prakt_5Lab.ElseWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Prakt_5Lab"
+        mc:Ignorable="d"
+        Title="ElseWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Back" Grid.ColumnSpan="3" Content="Назад" Click="Back_Click"></Button>
+        <Button x:Name="PostButton" Grid.Column="0" Grid.Row="1" Content="Должности" Click="PostButton_Click"></Button>
+        <Button x:Name="EmployeeButton" Grid.Column="1" Grid.Row="1" Content="Сотрудники" Click="EmployeeButton_Click"></Button>
+        <Button x:Name="RateButton" Grid.Column="2" Grid.Row="1" Content="Услвоия" Click="RateButton_Click"></Button>
+        <Button x:Name="UserProfileButton" Grid.Column="0" Grid.Row="2" Content="Профили" Click="UserProfileButton_Click"></Button>
+        <Button x:Name="ClientButton" Grid.Column="1" Grid.Row="2" Content="Клиенты" Click="ClientButton_Click"></Button>
+        <Button x:Name="OrderStatusButton" Grid.Column="2" Grid.Row="2" Content="Статусы" Click="OrderStatusButton_Click"></Button>
+        <Button x:Name="GoodsButton" Grid.Column="0" Grid.Row="3" Content="Товар" Click="GoodsButton_Click"></Button>
+        <Button x:Name="GoodType" Grid.Column="1" Grid.Row="3" Content="Типы товаров" Click="GoodType_Click"></Button>
+        <Button x:Name="materialButton" Grid.Column="2" Grid.Row="3" Content="Материалы" Click="materialButton_Click"></Button>
+        <Button Grid.Column="0" Grid.Row="4"></Button>
+        <Button Grid.Column="1" Grid.Row="4"></Button>
+        <Button Grid.Column="2" Grid.Row="4"></Button>
+        <Button Grid.Column="0" Grid.Row="5"></Button>
+        <Button Grid.Column="1" Grid.Row="5"></Button>
+        <Button Grid.Column="2" Grid.Row="5"></Button>
+        <Button x:Name="BackUp" Grid.ColumnSpan="3" Grid.Row="6" Content="бэкап" Click="BackUp_Click"></Button>
+    </Grid>
+</Window>

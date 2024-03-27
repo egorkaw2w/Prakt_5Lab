@@ -7,6 +7,20 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="8*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="8*"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="Else" Grid.Column="1" Grid.ColumnSpan="2" Content="Ещё" Click="Else_Click"></Button>
+            <Button x:Name="Exit" Grid.Column="0" Content="Выход" Click="Exit_Click"></Button>
+        </Grid>
+        <Frame x:Name="adminFrame" Grid.Row="1" Navigated="adminFrame_Navigated"></Frame>
+
     </Grid>
 </Window>

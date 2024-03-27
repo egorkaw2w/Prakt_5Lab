@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Prakt_5Lab"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid Background="#FF75B0C8">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -19,8 +20,8 @@
                 <RowDefinition></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBox x:Name="LoginArea" Width="250px" Height="30px"/>
-            <TextBox x:Name="PassArea" Grid.Row="1" Width="250px" Height="30px"  GotFocus="PassArea_GotFocus"></TextBox>
+            <TextBox x:Name="LoginArea" materialDesign:HintAssist.Hint=" Логин"  Width="250px" Height="30px"/>
+            <PasswordBox x:Name="PassArea" materialDesign:HintAssist.Hint="Пароль"  Grid.Row="1" Width="250px" Height="30px" />
             <Button x:Name="login" Grid.Row="3" Width="300px" Height="40" Content="Войти" FontSize="22" Click="login_Click"></Button>
             <DataGrid x:Name="GridCheck" Visibility="Collapsed" IsEnabled="False" AutoGenerateColumns="False"></DataGrid>
         </Grid>

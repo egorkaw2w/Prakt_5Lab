@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,9 +22,10 @@ namespace Prakt_5Lab
     /// </summary>
     public partial class UserWindow : Window
     {
-        GoodInfoTableAdapter good = new GoodInfoTableAdapter();
         GoodsTableAdapter goods = new GoodsTableAdapter();
         CartTableAdapter cart = new CartTableAdapter();
+        MaterialTableAdapter material = new MaterialTableAdapter();
+        GoodInfoTableAdapter good = new GoodInfoTableAdapter();
         DateTime time = DateTime.Now;
         List<string> eventList = new List<string>();
         bool isTradable;
@@ -37,18 +39,20 @@ namespace Prakt_5Lab
 
         }
 
-
         private void UserGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            UserGrid.Columns[0].Visibility = Visibility.Collapsed;
+
             if (UserGrid.SelectedItem != null)
             {
                 ItemCount.IsEnabled = true;
                 List<int> ints = new List<int>();
+
                 var selected = (UserGrid.SelectedItem as DataRowView);
-                int counter = Convert.ToInt32(selected[3].ToString());
-                ItemName.Text = selected[0].ToString();
-                ItemCost.Text = selected[4].ToString();
-                ItemStatus.Text = selected[6].ToString();
+
+                int counter = Convert.ToInt32(selected[4].ToString());
+                ItemName.Text = selected[1].ToString();
+                ItemStatus.Text = selected[7].ToString();
 
                 if (counter > 0)
                 {
@@ -66,6 +70,8 @@ namespace Prakt_5Lab
                     ItemCount.ItemsSource = eventList;
                     isTradable = false;
                 }
+                ItemCost.Text = selected[5].ToString();
+
             }
             else
             {
@@ -78,39 +84,63 @@ namespace Prakt_5Lab
             */
             if (UserGrid.SelectedItem != null && int.TryParse(ItemCount.SelectedItem.ToString(), out int result))
             {
-                ItemCost.Text = (Convert.ToInt32(ItemCount.SelectedItem) * Convert.ToInt32((UserGrid.SelectedItem as DataRowView).Row[4])).ToString();
+                ItemCost.Text = (Convert.ToInt32(ItemCount.SelectedItem) * Convert.ToInt32((UserGrid.SelectedItem as DataRowView).Row[5])).ToString();
             }
 
         }
 
         private void AddOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (UserGrid.SelectedItem != null && ItemCount.SelectedItem != null && isTradable == true)
-            {
-                int counter = Convert.ToInt32(ItemCount.SelectedItem.ToString());
-                int First = Convert.ToInt32((UserGrid.SelectedItem as DataRowView).Row[3]);
-                int result = First - counter;
-                string code = (UserGrid.SelectedItem as DataRowView).Row[8].ToString();
-                good.UpdateQuery(result, code);
-                MessageBox.Show(result.ToString());
+            string Time = time.ToString("f");
 
-                foreach (var rowView in cart.GetData())
+            if (UserGrid.SelectedItem != null)
+            {
+                var a = UserGrid.SelectedItem as DataRowView;
+                if (UserGrid.SelectedItem != null && ItemCount.SelectedItem != null && isTradable == true)
                 {
-                    if (rowView.Order_Code == ((UserGrid.SelectedItem as DataRowView).Row[8]).ToString())
+                    int counter = Convert.ToInt32(ItemCount.SelectedItem.ToString());
+                    int First = Convert.ToInt32(a.Row[4]);
+                    int result = First - counter;
+                    string code = ((a.Row[10]).ToString());
+                
+                    if (UserGrid.SelectedItem != null)
                     {
-                        MessageBox.Show()
-                        cart.UpdateQuery(
-                            (rowView.Item_count + counter * Convert.ToInt32((UserGrid.SelectedItem as DataRowView).Row[4].ToString())),
-                            (rowView.Item_count) + counter,
-                            time.ToString("f"),
-                            ((UserGrid.SelectedItem as DataRowView).Row[8]).ToString());
-                        return;
-/*                        cart.Update(ItemName.Text, Convert.ToDecimal(ItemCost.Text), Convert.ToInt32(ItemCount.SelectedItem), time.ToString("f"), ((UserGrid.SelectedItem as DataRowView).Row[8]).ToString());
-*/
+                        foreach (var rowView in cart.GetData())
+                        {
+
+                            if (rowView.Item_id == (int)(a.Row[0]) && ((UserGrid.SelectedItem as DataRowView).Row[0]) != null)
+                            {
+                                goods.UpdateGoods(result, code);
+                                cart.UpdateQuery(
+                                    (int)((UserGrid.SelectedItem as DataRowView).Row[0]),
+                                    (Time),
+                                    Convert.ToInt32(rowView.Item_Count + counter),
+                                    Convert.ToInt32(rowView.Item_Cost + Convert.ToDouble(ItemCost.Text)),
+                                    Convert.ToInt32(rowView.Id_Cart));
+                                UserGrid.ItemsSource = good.GetData();
+                                UserGrid.Columns[0].Visibility = Visibility.Collapsed;
+
+                                return;
+                            }
+
+                        }
+                        if (UserGrid.SelectedItem != null)
+                        {
+                            goods.UpdateGoods(result, code);
+                            UserGrid.ItemsSource = good.GetData();
+                            MessageBox.Show("готово");
+                            cart.Insert((int)a.Row[0], time.ToString("f"), counter, (int)Convert.ToDouble(ItemCost.Text));
+                        }
+                        else
+                        {
+                            MessageBox.Show("беда");
+                        }
                     }
+               
                 }
-                cart.Insert(ItemName.Text, Convert.ToDecimal(ItemCost.Text), Convert.ToInt32(ItemCount.SelectedItem), time.ToString("f"), ((UserGrid.SelectedItem as DataRowView).Row[8]).ToString());
+
                 UserGrid.ItemsSource = good.GetData();
+                UserGrid.Columns[0].Visibility = Visibility.Collapsed;
             }
         }
 
@@ -119,6 +149,11 @@ namespace Prakt_5Lab
             Cart window = new Cart();
             window.Show();
             Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            UserGrid.Columns[0].Visibility = Visibility.Collapsed;
         }
     }
 }

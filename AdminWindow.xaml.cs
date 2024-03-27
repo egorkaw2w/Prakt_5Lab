@@ -22,6 +22,26 @@ namespace Prakt_5Lab
         public AdminWindow()
         {
             InitializeComponent();
+            adminFrame.Content = new PreviewPage();
+        }
+
+        private void Else_Click(object sender, RoutedEventArgs e)
+        {
+            ElseWindow elseWindow = new ElseWindow();
+            elseWindow.Show();
+            Close();
+        }
+
+        private void adminFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            Close();
         }
     }
 }
